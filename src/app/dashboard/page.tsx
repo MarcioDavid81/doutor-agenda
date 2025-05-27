@@ -1,7 +1,10 @@
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
+import { db } from "@/src/db";
+import { usersToClinicsTable } from "@/src/db/schema";
 
 import SignOutButton from "./_components/sign-out-button";
 
@@ -11,6 +14,13 @@ const DashboardPage = async () => {
   });
   if (!session?.user) {
     redirect("/authentication");
+  }
+  //Pegar as clínicas do usuário logado
+  const clinics = await db.query.usersToClinicsTable.findMany({
+    where: eq(usersToClinicsTable.userId, session.user.id),
+  });
+  if(clinics.length === 0 ) {
+    redirect("/clinic-form")
   }
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
