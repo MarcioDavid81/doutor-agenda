@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📅 Doutor Agenda - Sistema de Agendamento Médico
 
-## Getting Started
+Sistema moderno para gestão de consultas médicas com dashboard completo, autenticação segura e controle de clínicas, médicos e pacientes.
 
-First, run the development server:
+✨ Funcionalidades Principais
+🔐 Autenticação Segura
 
-```bash
+Login com email/senha ou via Google
+
+Sessões protegidas
+
+🏥 Gestão Completa
+
+CRUD de clínicas
+
+Cadastro de médicos com especialidades
+
+Gestão de pacientes
+
+Agenda médica personalizada
+
+📊 Dashboard Interativo
+
+Visualização de agendamentos por médico
+
+Controle de faturamento
+
+Horários disponíveis em tempo real
+
+Gráficos e relatórios
+
+🔄 Fluxo de Agendamento
+
+Marcação online de consultas
+
+Confirmação automática
+
+
+🛠 Tecnologias Utilizadas
+Frontend
+
+Next.js 15 (App Router)
+
+ShadcnUI (Componentes UI)
+
+TailwindCSS (Estilização)
+
+React Hook Form (Formulários)
+
+Zod (Validação)
+
+Backend
+
+Supabase (PostgreSQL)
+
+Drizzle ORM (Banco de dados)
+
+NextAuth.js/Better Auth (Autenticação)
+
+Ferramentas
+
+TypeScript
+
+ESLint + Prettier
+
+
+🚀 Como Executar o Projeto
+Pré-requisitos
+Node.js 20+
+
+PostgreSQL (ou usar Supabase)
+
+Conta no Google para OAuth
+
+Instalação
+Clone o repositório:
+
+bash
+git clone https://github.com/seu-usuario/doutor-agenda.git
+cd doutor-agenda
+Instale as dependências:
+
+bash
+npm install
+Configure as variáveis de ambiente:
+
+bash
+cp .env.example .env.local
+Edite o .env.local com suas credenciais
+
+Inicie o servidor de desenvolvimento:
+
+bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✉️ Contato
+Marcio David - marciodavid81@gmail.com
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Link do Projeto: https://github.com/seu-usuario/doutor-agenda
