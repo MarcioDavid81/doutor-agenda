@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -60,14 +61,14 @@ const SignUpForm = () => {
       },
       {
         onSuccess: () => {
-          toast.success("Conta criada com sucesso!")
+          toast.success("Conta criada com sucesso!");
           router.push("/dashboard");
         },
         onError: (ctx) => {
-          if (ctx.error.code === 'USER_ALREADY_EXISTS'){
-            toast.error("Email já cadastrado!")
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("Email já cadastrado!");
           }
-        }
+        },
       },
     );
   }
@@ -125,7 +126,7 @@ const SignUpForm = () => {
               )}
             />
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex flex-col gap-4">
             <Button
               type="submit"
               className="w-full"
@@ -136,6 +137,9 @@ const SignUpForm = () => {
               ) : (
                 "Criar Conta"
               )}
+            </Button>
+            <Button className="w-full">
+              <Link href="/">Voltar</Link>
             </Button>
           </CardFooter>
         </form>

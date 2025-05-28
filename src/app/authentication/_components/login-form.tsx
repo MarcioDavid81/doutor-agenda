@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -138,6 +139,9 @@ const LoginForm = () => {
             >
               <Image src={icon} width={20} height={20} alt="Google Ícone" />
               Entrar com Google
+            </Button>
+            <Button className="w-full">
+              <Link href="/">Voltar</Link>
             </Button>
           </CardFooter>
         </form>

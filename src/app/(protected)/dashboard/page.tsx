@@ -1,13 +1,29 @@
 import { eq } from "drizzle-orm";
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { db } from "@/src/db";
 import { usersToClinicsTable } from "@/src/db/schema";
 
 import SignOutButton from "./_components/sign-out-button";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  keywords: [
+    "agendamento de consultas",
+    "gestão de clínic",
+    "controle de agenda de médicos e pacientes",
+  ],
+  description: "O seu sistema de gestão de agendamento de consultas",
+  authors: [
+    { name: "Marcio David", url: "https://md-webdeveloper.vercel.app" },
+  ],
+};
 
 const DashboardPage = async () => {
   const session = await auth.api.getSession({
@@ -16,7 +32,7 @@ const DashboardPage = async () => {
   if (!session?.user) {
     redirect("/authentication");
   }
-  console.log(session.user)
+  console.log(session.user);
   //Pegar as clínicas do usuário logado
   const clinics = await db.query.usersToClinicsTable.findMany({
     where: eq(usersToClinicsTable.userId, session.user.id),
@@ -25,7 +41,7 @@ const DashboardPage = async () => {
     redirect("/clinic-form");
   }
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center space-y-4">
       <h1>Dashboard</h1>
       <h1>{session?.user.name}</h1>
       <h1>{session?.user.email}</h1>
@@ -36,6 +52,9 @@ const DashboardPage = async () => {
         height={50}
         className="rounded-full"
       />
+      <Button>
+        <Link href="/">Página Inicial</Link>
+      </Button>
       <SignOutButton />
     </div>
   );

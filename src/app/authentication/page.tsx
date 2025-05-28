@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -7,6 +8,19 @@ import { auth } from "@/lib/auth";
 import LoginForm from "./_components/login-form";
 import SignUpForm from "./_components/sign-up-form";
 
+export const metadata: Metadata = {
+  title: "Autenticação",
+  keywords: [
+    "agendamento de consultas",
+    "gestão de clínic",
+    "controle de agenda de médicos e pacientes",
+  ],
+  description: "O seu sistema de gestão de agendamento de consultas",
+  authors: [
+    { name: "Marcio David", url: "https://md-webdeveloper.vercel.app" },
+  ],
+};
+
 const AuthenticationPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -15,7 +29,7 @@ const AuthenticationPage = async () => {
     redirect("/dashboard");
   }
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <div className="flex h-screen w-screen flex-col items-center justify-center">
       <Tabs defaultValue="login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
