@@ -41,8 +41,8 @@ const DashboardPage = async () => {
     redirect("/clinic-form");
   }
   return (
-    <div className="flex h-screen flex-col items-center justify-center space-y-4">
-      <h1>Dashboard</h1>
+    <div>
+
       <h1>{session?.user.name}</h1>
       <h1>{session?.user.email}</h1>
       <Image
