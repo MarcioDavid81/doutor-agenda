@@ -34,12 +34,12 @@ type AppointmentWithRelations = typeof appointmentsTable.$inferSelect & {
     email: string;
     phoneNumber: string;
     sex: "male" | "female";
-  };
+  } | null;
   doctor: {
     id: string;
     name: string;
     specialty: string;
-  };
+  } | null;
 };
 
 interface AppointmentsTableActionsProps {
@@ -71,7 +71,9 @@ const AppointmentsTableActions = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{appointment.patient.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {appointment.patient ? appointment.patient.name : "-"}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <AlertDialog>
           <AlertDialogTrigger asChild>
