@@ -24,7 +24,7 @@ function DropdownMenuTrigger({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
   return (
-    <DropdownMenuPrimitive.Trigger
+    <DropdownMenuPrimitive.Trigger asChild
       data-slot="dropdown-menu-trigger"
       {...props}
     />

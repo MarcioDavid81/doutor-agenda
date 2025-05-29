@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -18,6 +19,20 @@ import { patientsTable } from "@/src/db/schema";
 
 import AddPatientButton from "./_components/add-patient-button";
 import { patientsTableColumns } from "./_components/table-columns";
+
+export const metadata: Metadata = {
+  title: "Pacientes",
+  keywords: [
+    "agendamento de consultas",
+    "gestão de clínic",
+    "controle de agenda de médicos e pacientes",
+  ],
+  description: "O seu sistema de gestão de agendamento de consultas",
+  authors: [
+    { name: "Marcio David", url: "https://md-webdeveloper.vercel.app" },
+  ],
+};
+
 
 const PatientsPage = async () => {
   const session = await auth.api.getSession({
