@@ -4,7 +4,7 @@ import {
   CalendarIcon,
   ClockIcon,
   DollarSignIcon,
-  TrashIcon,
+  Trash2Icon,
 } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
@@ -115,7 +115,7 @@ const DoctorCard = ({ doctor }: DoctorCardProps) => {
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="w-full">
-              <TrashIcon />
+              <Trash2Icon className="text-red-500" />
               Deletar médico
             </Button>
           </AlertDialogTrigger>

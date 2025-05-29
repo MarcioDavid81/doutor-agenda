@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -17,6 +18,19 @@ import { doctorsTable } from "@/src/db/schema";
 
 import AddDoctorButton from "./_components/add-doctor-button";
 import DoctorCard from "./_components/doctor-card";
+
+export const metadata: Metadata = {
+  title: "Médicos",
+  keywords: [
+    "agendamento de consultas",
+    "gestão de clínic",
+    "controle de agenda de médicos e pacientes",
+  ],
+  description: "O seu sistema de gestão de agendamento de consultas",
+  authors: [
+    { name: "Marcio David", url: "https://md-webdeveloper.vercel.app" },
+  ],
+};
 
 const DoctorsPage = async () => {
   const session = await auth.api.getSession({
@@ -44,11 +58,17 @@ const DoctorsPage = async () => {
         </PageActions>
       </PageHeader>
       <PageContent>
-        <div className="grid grid-cols-3 gap-6">
-          {doctors.map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
-          ))}
-        </div>
+        {doctors.length === 0 ? (
+          <p className="text-muted-foreground text-sm">
+            Ainda não existem médicos cadastrados para esta clínica.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {doctors.map((doctor) => (
+              <DoctorCard key={doctor.id} doctor={doctor} />
+            ))}
+          </div>
+        )}
       </PageContent>
     </PageContainer>
   );

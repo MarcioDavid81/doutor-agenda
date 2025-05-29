@@ -12,7 +12,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -58,7 +58,7 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const path = usePathname()
+  const path = usePathname();
   const router = useRouter();
   const session = authClient.useSession();
   const handleSignOut = async () => {
@@ -108,11 +108,21 @@ export function AppSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg" className="cursor-pointer">
                   <Avatar>
-                    <AvatarFallback>F</AvatarFallback>
+                    <AvatarImage src={session.data?.user.image ?? undefined} />
+                    <AvatarFallback>
+                      {session.data?.user.name
+                        ? session.data.user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                        : ""}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm">{session.data?.user.clinic?.name}</p>
-                    <p  className="text-muted-foreground text-sm">{session.data?.user.email}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {session.data?.user.email}
+                    </p>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

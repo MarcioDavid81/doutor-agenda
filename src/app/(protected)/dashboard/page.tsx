@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -36,13 +35,6 @@ const DashboardPage = async () => {
     <div>
       <h1>{session?.user.name}</h1>
       <h1>{session?.user.email}</h1>
-      <Image
-        src={session?.user?.image as string}
-        alt="User"
-        width={50}
-        height={50}
-        className="rounded-full"
-      />
       <Button>
         <Link href="/">Página Inicial</Link>
       </Button>

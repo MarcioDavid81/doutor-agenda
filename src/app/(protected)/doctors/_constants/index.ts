@@ -47,6 +47,7 @@ export enum MedicalSpecialty {
   RADIOLOGIA = "Radiologia e Diagnóstico por Imagem",
   RADIOTERAPIA = "Radioterapia",
   REUMATOLOGIA = "Reumatologia",
+  SEXOLOGIA = "Sexóloga",
   UROLOGIA = "Urologia",
 }
 
