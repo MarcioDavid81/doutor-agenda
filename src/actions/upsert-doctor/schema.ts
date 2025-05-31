@@ -6,6 +6,7 @@ export const upsertDoctorSchema = z
     name: z.string().trim().min(1, {
       message: "Nome é obrigatório.",
     }),
+    avatarUrl: z.union([z.instanceof(File), z.string()]).optional(),
     specialty: z.string().trim().min(1, {
       message: "Especialidade é obrigatória.",
     }),

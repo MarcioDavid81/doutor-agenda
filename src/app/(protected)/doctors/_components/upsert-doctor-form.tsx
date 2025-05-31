@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
-import { NumericFormat } from "react-number-format";
+import { NumericFormat, PatternFormat } from "react-number-format";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -66,7 +66,7 @@ const formSchema = z
     },
     {
       message:
-        "O horário de início não pode ser anterior ao horário de término.",
+        "O horário de término não pode ser anterior ao horário de início.",
       path: ["availableToTime"],
     },
   );
@@ -171,44 +171,55 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Telefone</FormLabel>
-                <FormControl>
-                  <Input placeholder="Digite o telefone" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="appointmentPrice"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Preço da Consulta</FormLabel>
-                <NumericFormat
-                  className="input"
-                  prefix="R$ "
-                  thousandSeparator="."
-                  decimalSeparator=","
-                  decimalScale={2}
-                  fixedDecimalScale
-                  allowNegative={false}
-                  allowLeadingZeros={false}
-                  value={field.value}
-                  customInput={Input}
-                  onValueChange={(value) => {
-                    field.onChange(value.floatValue);
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-2 gap-2">
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Número de telefone</FormLabel>
+                  <FormControl>
+                    <PatternFormat
+                      format="(##) #####-####"
+                      mask="_"
+                      placeholder="(11) 99999-9999"
+                      value={field.value}
+                      onValueChange={(value) => {
+                        field.onChange(value.value);
+                      }}
+                      customInput={Input}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="appointmentPrice"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preço da Consulta</FormLabel>
+                  <NumericFormat
+                    className="input"
+                    prefix="R$ "
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale
+                    allowNegative={false}
+                    allowLeadingZeros={false}
+                    value={field.value}
+                    customInput={Input}
+                    onValueChange={(value) => {
+                      field.onChange(value.floatValue);
+                    }}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <h3 className="text-sm font-medium">Disponibilidade diária</h3>
           <div className="grid grid-cols-2 gap-2">
             <FormField
@@ -415,10 +426,10 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
             <Button type="submit" disabled={upsertDoctorAction.isPending}>
               {upsertDoctorAction.isPending ? (
                 <Loader2 className="animate-spin" />
+              ) : doctor ? (
+                "Salvar"
               ) : (
-                doctor
-                  ? "Salvar"
-                  : "Adicionar"
+                "Adicionar"
               )}
             </Button>
           </DialogFooter>
