@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,19 +30,46 @@ const AuthenticationPage = async () => {
     redirect("/dashboard");
   }
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
-      <Tabs defaultValue="login" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register">Criar Conta</TabsTrigger>
-        </TabsList>
-        <TabsContent value="login">
-          <LoginForm />
-        </TabsContent>
-        <TabsContent value="register">
-          <SignUpForm />
-        </TabsContent>
-      </Tabs>
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex flex-col h-screen w-full items-center justify-center">
+        <Image
+          src="/s-logo.svg"
+          alt="Logo"
+          width={200}
+          height={400}
+          className="mb-8"
+        />
+        <Tabs defaultValue="login" className="w-[400px]">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="login">Login</TabsTrigger>
+            <TabsTrigger value="register">Criar Conta</TabsTrigger>
+          </TabsList>
+          <TabsContent value="login">
+            <LoginForm />
+          </TabsContent>
+          <TabsContent value="register">
+            <SignUpForm />
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div className="h-screen w-full content-end bg-[url('/bg.jpg')] bg-cover bg-center pb-4">
+        <p className="mt-4 text-center text-sm text-white">
+          Ao continuar, você concorda com os{" "}
+          <a
+            href="/terms"
+            className="hover:text-primary/80 text-white underline"
+          >
+            Termos de Serviço
+          </a>{" "}
+          e a{" "}
+          <a
+            href="/privacy"
+            className="hover:text-primary/80 text-white underline"
+          >
+            Política de Privacidade
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

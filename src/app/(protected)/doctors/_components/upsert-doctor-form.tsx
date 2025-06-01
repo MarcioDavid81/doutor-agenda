@@ -1,11 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, Upload, User } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat, PatternFormat } from "react-number-format";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -77,6 +79,10 @@ interface UpsertDoctorFormProps {
 }
 
 const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const isLoading = useAction(upsertDoctor).isPending;
   const form = useForm<z.infer<typeof formSchema>>({
     shouldUnregister: true,
     resolver: zodResolver(formSchema),
@@ -106,14 +112,66 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
       toast.error("Erro ao adicionar médico!");
     },
   });
+  const handleAvatarSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validar tipo de arquivo
+      if (!file.type.startsWith("image/")) {
+        alert({
+          title: "Erro",
+          description: "Por favor, selecione apenas arquivos de imagem",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Validar tamanho (5MB máximo)
+      if (file.size > 5 * 1024 * 1024) {
+        alert("O arquivo deve ter no máximo 5MB");
+        setAvatarPreview(null);
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Criar preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setAvatarPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (selectedFile) {
+      // Upload da imagem para o Cloudinary
+      upsertDoctorAction.execute({
+        ...values,
+        id: doctor?.id,
+        avatarUrl: selectedFile,
+        availableFromWeekDay: parseInt(values.availableFromWeekDay),
+        availableToWeekDay: parseInt(values.availableToWeekDay),
+        appointmentPriceInCents: values.appointmentPrice * 100,
+      });
+      return;
+    }
     upsertDoctorAction.execute({
       ...values,
       id: doctor?.id,
+      avatarUrl: selectedFile,
       availableFromWeekDay: parseInt(values.availableFromWeekDay),
       availableToWeekDay: parseInt(values.availableToWeekDay),
       appointmentPriceInCents: values.appointmentPrice * 100,
     });
+  };
+
+  const getUserInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   return (
@@ -127,7 +185,49 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          {/* Avatar Upload */}
+          <div className="flex flex-col items-center space-y-4">
+            <Avatar className="h-24 w-24">
+              <AvatarImage
+                src={avatarPreview || undefined}
+                alt="Avatar preview"
+              />
+              <AvatarFallback className="text-lg">
+                {form.watch("name") ? (
+                  getUserInitials(form.watch("name"))
+                ) : (
+                  <User className="h-8 w-8" />
+                )}
+              </AvatarFallback>
+            </Avatar>
+
+            <div className="flex flex-col items-center space-y-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isLoading}
+                className="flex items-center space-x-2"
+              >
+                <Upload className="h-4 w-4" />
+                <span>Selecionar Avatar</span>
+              </Button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarSelect}
+                className="hidden"
+              />
+
+              <p className="text-muted-foreground text-center text-xs">
+                PNG, JPG ou WEBP até 5MB
+              </p>
+            </div>
+          </div>
           <FormField
             control={form.control}
             name="name"
