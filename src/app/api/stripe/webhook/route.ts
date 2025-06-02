@@ -46,6 +46,7 @@ export const POST = async (request: Request) => {
       if (!userId) {
         throw new Error("User ID not found");
       }
+      // Atualizando o plano do usuário
       await db
         .update(usersTable)
         .set({
@@ -70,6 +71,7 @@ export const POST = async (request: Request) => {
       if (!userId) {
         throw new Error("User ID not found");
       }
+      // Removendo o plano do usuário
       await db
         .update(usersTable)
         .set({
@@ -81,6 +83,7 @@ export const POST = async (request: Request) => {
     }
   }
   return NextResponse.json({
+    // Informa o stripe que o webhook foi recebido com sucesso
     received: true,
   });
 };

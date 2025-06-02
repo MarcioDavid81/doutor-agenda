@@ -30,7 +30,7 @@ const AuthenticationPage = async () => {
     redirect("/dashboard");
   }
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <div className="flex md:flex-row h-screen w-screen items-center justify-center">
       <div className="flex flex-col h-screen w-full items-center justify-center">
         <Image
           src="/s-logo.svg"
@@ -52,7 +52,7 @@ const AuthenticationPage = async () => {
           </TabsContent>
         </Tabs>
       </div>
-      <div className="h-screen w-full content-end bg-[url('/bg.jpg')] bg-cover bg-center pb-4">
+      <div className="h-screen w-full hidden lg:block content-end bg-[url('/bg.jpg')] bg-cover bg-center pb-4">
         <p className="mt-4 text-center text-sm text-white">
           Ao continuar, você concorda com os{" "}
           <a

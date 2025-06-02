@@ -1,13 +1,13 @@
 import { Stethoscope } from "lucide-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 interface TopDoctorsProps {
   doctors: {
     id: string;
     name: string;
-    avatarImageUrl: string | null;
+    avatarImageUrl: string;
     specialty: string;
     appointments: number;
   }[];
@@ -30,6 +30,7 @@ export default function TopDoctors({ doctors }: TopDoctorsProps) {
             <div key={doctor.id} className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Avatar className="h-10 w-10">
+                  <AvatarImage src={doctor.avatarImageUrl} />
                   <AvatarFallback className="bg-gray-100 text-lg font-medium text-gray-600">
                     {doctor.name
                       .split(" ")
