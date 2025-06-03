@@ -7,7 +7,7 @@ interface TopDoctorsProps {
   doctors: {
     id: string;
     name: string;
-    avatarImageUrl: string;
+    avatarImageUrl: string | null;
     specialty: string;
     appointments: number;
   }[];
@@ -30,7 +30,7 @@ export default function TopDoctors({ doctors }: TopDoctorsProps) {
             <div key={doctor.id} className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={doctor.avatarImageUrl} />
+                  <AvatarImage src={doctor?.avatarImageUrl ?? ""} />
                   <AvatarFallback className="bg-gray-100 text-lg font-medium text-gray-600">
                     {doctor.name
                       .split(" ")

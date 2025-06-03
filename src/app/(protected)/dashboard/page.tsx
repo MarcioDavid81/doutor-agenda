@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import { Calendar } from "lucide-react";
-import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -24,19 +23,6 @@ import { DatePicker } from "./_components/date-picker";
 import StatsCards from "./_components/stats-card";
 import TopDoctors from "./_components/top-doctors";
 import TopSpecialties from "./_components/top-specialties";
-
-export const metadata: Metadata = {
-  title: "Dashboard",
-  keywords: [
-    "agendamento de consultas",
-    "gestão de clínic",
-    "controle de agenda de médicos e pacientes",
-  ],
-  description: "O seu sistema de gestão de agendamento de consultas",
-  authors: [
-    { name: "Marcio David", url: "https://md-webdeveloper.vercel.app" },
-  ],
-};
 
 interface DashboardPageProps {
   searchParams: Promise<{
