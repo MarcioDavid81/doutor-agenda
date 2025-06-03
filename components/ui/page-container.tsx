@@ -1,5 +1,7 @@
+import { AppBreadcrumb } from "@/src/app/(protected)/_components/app-breadcrumb";
+
 export const PageContainer = ({ children }: { children: React.ReactNode }) => {
-  return <div className="space-y-6 p-6">{children}</div>;
+  return <div className="space-y-6 p-6"><AppBreadcrumb />{children}</div>;
 };
 export const PageHeader = ({children}: {children: React.ReactNode}) => {
   return <div className="flex items-center justify-between">{children}</div>
