@@ -192,7 +192,7 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           {/* Avatar Upload */}
           <div className="flex flex-col items-center space-y-4">
-            <Avatar className="h-24 w-24">
+            <Avatar className="h-24 w-24 border-2 border-blue-500 border-dashed">
               <AvatarImage
                 src={avatarPreview || undefined}
                 alt="Avatar preview"
