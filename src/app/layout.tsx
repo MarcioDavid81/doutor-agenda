@@ -42,7 +42,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <NuqsAdapter>{children}</NuqsAdapter>
         </ReactQueryProvider>
-        <Toaster richColors theme="light" />
+        <Toaster richColors position="bottom-center" theme="light" />
       </body>
     </html>
   );

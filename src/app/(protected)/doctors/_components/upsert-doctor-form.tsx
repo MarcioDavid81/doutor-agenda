@@ -44,6 +44,7 @@ const formSchema = z
     name: z.string().trim().min(1, {
       message: "Nome é obrigatório!",
     }),
+    avatarImageUrl: z.instanceof(File).optional(),
     specialty: z.string().trim().min(1, {
       message: "Especialidade é obrigatória!",
     }),
@@ -88,6 +89,9 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: doctor?.name ?? "",
+      avatarImageUrl: doctor?.avatarImageUrl
+        ? new File([], doctor.avatarImageUrl)
+        : undefined,
       specialty: doctor?.specialty ?? "",
       phoneNumber: doctor?.phoneNumber ?? "",
       appointmentPrice: doctor?.appointmentPriceInCents
