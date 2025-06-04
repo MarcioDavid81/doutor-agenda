@@ -78,15 +78,15 @@ export function AppSidebar() {
       <SidebarHeader className="border-b p-4">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo-dark.png"
-            alt="Logo Doutor Agenda"
+            src="/logo-dark.svg"
+            alt="Logo Dr Agenda"
             width={136}
             height={28}
             className="block dark:hidden"
           />
           <Image
-            src="/logo-light.png"
-            alt="Logo Doutor Agenda"
+            src="/logo-light.svg"
+            alt="Logo Dr Agenda"
             width={136}
             height={28}
             className="hidden dark:block"

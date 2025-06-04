@@ -33,11 +33,18 @@ const AuthenticationPage = async () => {
     <div className="flex md:flex-row h-screen w-screen items-center justify-center">
       <div className="flex flex-col h-screen w-full items-center justify-center">
         <Image
-          src="/s-logo.svg"
-          alt="Logo"
+          src="/logo-dark.svg"
+          alt="Logo Dr Agenda"
           width={200}
-          height={400}
-          className="mb-8"
+          height={40}
+          className="mb-8 block dark:hidden"
+        />
+        <Image
+          src="/logo-light.svg"
+          alt="Logo Dr Agenda"
+          width={200}
+          height={40}
+          className="mb-8 hidden dark:block"
         />
         <Tabs defaultValue="login" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
