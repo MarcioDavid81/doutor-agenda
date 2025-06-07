@@ -76,12 +76,19 @@ const formSchema = z
 
 interface UpsertDoctorFormProps {
   doctor?: typeof doctorsTable.$inferSelect;
+  avatarUrl?: string;
   onSuccess?: () => void;
 }
 
-const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
+const UpsertDoctorForm = ({
+  doctor,
+  avatarUrl,
+  onSuccess,
+}: UpsertDoctorFormProps) => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(
+    avatarUrl || null,
+  );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const isLoading = useAction(upsertDoctor).isPending;
   const form = useForm<z.infer<typeof formSchema>>({
@@ -192,7 +199,7 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           {/* Avatar Upload */}
           <div className="flex flex-col items-center space-y-4">
-            <Avatar className="h-24 w-24 border-2 border-blue-500 border-dashed">
+            <Avatar className="h-24 w-24 border-2 border-dashed border-blue-500">
               <AvatarImage
                 src={avatarPreview || undefined}
                 alt="Avatar preview"

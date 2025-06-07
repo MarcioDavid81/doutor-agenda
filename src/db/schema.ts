@@ -4,6 +4,7 @@ import {
   integer,
   pgEnum,
   pgTable,
+  serial,
   text,
   time,
   timestamp,
@@ -205,6 +206,42 @@ export const appointmentsTableRelations = relations(
     }),
     doctor: one(doctorsTable, {
       fields: [appointmentsTable.doctorId],
+      references: [doctorsTable.id],
+    }),
+  }),
+);
+
+export const prescriptionsTable = pgTable("prescriptions", {
+  id: serial("id").primaryKey(),
+  patientId: uuid("patient_id").references(() => patientsTable.id, {
+    onDelete: "cascade",
+  }),
+  doctorId: uuid("doctor_id").references(() => doctorsTable.id, {
+    onDelete: "cascade",
+  }),
+  clinicId: uuid("clinic_id").references(() => clinicsTable.id, {
+    onDelete: "cascade",
+  }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const prescriptionsTableRelations = relations(
+  prescriptionsTable,
+  ({ one }) => ({
+    clinic: one(clinicsTable, {
+      fields: [prescriptionsTable.clinicId],
+      references: [clinicsTable.id],
+    }),
+    patient: one(patientsTable, {
+      fields: [prescriptionsTable.patientId],
+      references: [patientsTable.id],
+    }),
+    doctor: one(doctorsTable, {
+      fields: [prescriptionsTable.doctorId],
       references: [doctorsTable.id],
     }),
   }),

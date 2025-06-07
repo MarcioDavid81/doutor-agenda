@@ -5,6 +5,7 @@ import {
   Gem,
   LayoutDashboard,
   LogOutIcon,
+  PillBottle,
   Stethoscope,
   UsersRound,
 } from "lucide-react";
@@ -55,6 +56,11 @@ const items = [
     title: "Pacientes",
     url: "/patients",
     icon: UsersRound,
+  },
+  {
+    title: "Receitas",
+    url: "/prescriptions",
+    icon: PillBottle,                                 
   },
 ];
 

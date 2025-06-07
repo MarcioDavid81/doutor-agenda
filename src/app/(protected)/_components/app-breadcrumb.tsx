@@ -19,6 +19,7 @@ const breadcrumbLabels: Record<string, string> = {
   doctors: 'Médicos',
   patients: 'Pacientes',
   subscription: 'Planos',
+  prescriptions: 'Receitas',
 }
 
 export function AppBreadcrumb() {
