@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gt } from "drizzle-orm";
 import { Calendar } from "lucide-react";
 import { headers } from "next/headers";
 
@@ -12,7 +12,6 @@ const NextAppointmentsCard = async () => {
   });
 
   if (!session?.user?.clinic?.id) {
-    // Caso não exista uma clínica associada ao usuário, exibe uma mensagem padrão
     return (
       <div className="relative">
         <div className="absolute inset-0 rotate-6 transform rounded-3xl bg-gradient-to-r from-blue-400 to-purple-500 opacity-20"></div>
@@ -32,10 +31,17 @@ const NextAppointmentsCard = async () => {
       </div>
     );
   }
-  // Busca as consultas agendadas para a clínica do usuário
+
+  const now = new Date();
+
   const [appointments] = await Promise.all([
     db.query.appointmentsTable.findMany({
-      where: eq(appointmentsTable.clinicId, session.user.clinic.id),
+      where: and(
+        eq(appointmentsTable.clinicId, session.user.clinic.id),
+        gt(appointmentsTable.date, now)
+      ),
+      orderBy: (appointments, { asc }) => [asc(appointments.date)],
+      limit: 5,
       with: {
         patient: true,
         doctor: true,
@@ -56,39 +62,43 @@ const NextAppointmentsCard = async () => {
           </div>
 
           <div className="space-y-4">
-            {appointments.map((appointment, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-4 rounded-xl bg-gray-50 p-4 transition-colors hover:bg-blue-50"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500 font-semibold text-white">
-                  {appointment.patient
-                    ? appointment.patient.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .slice(0, 2)
-                    : ""}
+            {appointments.length > 0 ? (
+              appointments.map((appointment, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-4 rounded-xl bg-gray-50 p-4 transition-colors hover:bg-blue-50"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500 font-semibold text-white">
+                    {appointment.patient
+                      ? appointment.patient.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .slice(0, 2)
+                      : ""}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-gray-800">
+                      {appointment.patient?.name}
+                    </p>
+                    <p className="text-sm text-gray-600">{`Dr. ${appointment.doctor?.name}`}</p>
+                  </div>
+                  <div className="font-semibold text-blue-600">
+                    {appointment.date.toLocaleDateString("pt-BR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })}{" "}
+                    {appointment.date.toLocaleTimeString("pt-BR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-800">
-                    {appointment.patient?.name}
-                  </p>
-                  <p className="text-sm text-gray-600">{`Dr. ${appointment.doctor?.name}`}</p>
-                </div>
-                <div className="font-semibold text-blue-600">
-                  {appointment.date.toLocaleDateString("pt-BR", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                  })}{" "}
-                  {appointment.date.toLocaleTimeString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}{" "}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-gray-600">Nenhuma consulta futura encontrada.</p>
+            )}
           </div>
         </div>
       </div>
