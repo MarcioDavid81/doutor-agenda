@@ -26,13 +26,13 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 font-semibold">Produto</h4>
             <div className="space-y-2 text-gray-400">
-              <a href="#" className="block transition-colors hover:text-white">
+              <a href="#" className="block transition-colors hover:text-blue-500">
                 Recursos
               </a>
-              <a href="#" className="block transition-colors hover:text-white">
+              <a href="#" className="block transition-colors hover:text-blue-500">
                 Preços
               </a>
-              <a href="#" className="block transition-colors hover:text-white">
+              <a href="#" className="block transition-colors hover:text-blue-500">
                 Segurança
               </a>
             </div>
@@ -41,14 +41,14 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 font-semibold">Suporte</h4>
             <div className="space-y-2 text-gray-400">
-              <a href="#" className="block transition-colors hover:text-white">
+              <a href="#" className="block transition-colors hover:text-blue-500">
                 Central de Ajuda
               </a>
-              <a href="#" className="block transition-colors hover:text-white">
-                Tutoriais
+              <a href="/privacy" className="block transition-colors hover:text-blue-500">
+                Política de Privacidade
               </a>
-              <a href="#" className="block transition-colors hover:text-white">
-                Contato
+              <a href="/terms" className="block transition-colors hover:text-blue-500">
+                Termos de Uso
               </a>
             </div>
           </div>
