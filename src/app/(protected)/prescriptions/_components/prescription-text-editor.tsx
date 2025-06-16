@@ -53,7 +53,7 @@ const PrescriptionTextEditor = ({
   });
 
   return (
-    <div className={cn("bg-blue-50 border border-muted rounded-md w-full flex flex-col", className)}>
+    <div className={cn("bg-blue-50 dark:text-gray-950 border border-muted dark:border-gray-950 rounded-md w-full flex flex-col", className)}>
       <TextEditorMenuBar editor={editor} />
       <div className="h-full [&>div]:h-full flex flex-col overflow-y-auto">
         <EditorContent editor={editor} />

@@ -95,7 +95,7 @@ if (!editor) {
         <Tooltip key={label}>
           <Button
           onClick={action}
-          className={`p-2 rounded-md hover:bg-gray-200 focus:outline-none ${active ? "bg-gray-300" : ""}`}
+          className={`p-2 rounded-md hover:bg-gray-200 dark:text-gray-950 focus:outline-none ${active ? "bg-gray-300" : ""}`}
           title={label}
           variant={active ? "secondary" : "ghost"}
           type="button"

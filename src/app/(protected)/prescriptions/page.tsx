@@ -18,6 +18,7 @@ import { db } from "@/src/db";
 import { doctorsTable, patientsTable, prescriptionsTable } from "@/src/db/schema";
 
 import AddPrescriptionButton from "./_components/add-prescription-button";
+import { DownloadPrescriptionButton } from "./_components/download-prescription-button";
 import { prescriptionsTableColumns } from "./_components/table-columns";
 
 export const metadata: Metadata = {
@@ -47,40 +48,39 @@ const PrescriptionsPage = async () => {
     redirect("/new-subscription");
   }
 
-   const [patients, doctors, prescriptions ] = await Promise.all([
-      db.query.patientsTable.findMany({
-        where: eq(patientsTable.clinicId, session.user.clinic.id),
-      }),
-      db.query.doctorsTable.findMany({
-        where: eq(doctorsTable.clinicId, session.user.clinic.id),
-      }),
-      db.query.prescriptionsTable.findMany({
-        where: eq(prescriptionsTable.clinicId, session.user.clinic.id),
-        with: {
-          patient: true,
-          doctor: true,
-        },
-      })
-    ]);
+  const [patients, doctors, prescriptions] = await Promise.all([
+    db.query.patientsTable.findMany({
+      where: eq(patientsTable.clinicId, session.user.clinic.id),
+    }),
+    db.query.doctorsTable.findMany({
+      where: eq(doctorsTable.clinicId, session.user.clinic.id),
+    }),
+    db.query.prescriptionsTable.findMany({
+      where: eq(prescriptionsTable.clinicId, session.user.clinic.id),
+      with: {
+        patient: true,
+        doctor: true,
+      },
+    }),
+  ]);
 
   return (
     <PageContainer>
       <PageHeader>
         <PageHeaderContent>
           <PageTitle>Receitas</PageTitle>
-          <PageDescription>
-            Gerencie as receitas da sua clínica
-          </PageDescription>
+          <PageDescription>Gerencie as receitas da sua clínica</PageDescription>
         </PageHeaderContent>
         <PageActions>
           <AddPrescriptionButton patients={patients} doctors={doctors} />
         </PageActions>
       </PageHeader>
       <PageContent>
-        <DataTable
-          data={prescriptions}
-          columns={prescriptionsTableColumns}
-        />
+        <DataTable data={prescriptions} columns={prescriptionsTableColumns} />
+        <DownloadPrescriptionButton
+          doctor={prescriptions[0]?.doctor?.name ?? ""}
+          patient={prescriptions[0]?.patient?.name ?? ""}
+          contentHtml={prescriptions[0]?.content ?? ""} crm={""}        />
       </PageContent>
     </PageContainer>
   );
